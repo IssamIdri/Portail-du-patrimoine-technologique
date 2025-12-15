@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualités - Portail du Patrimoine Technologique</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🏭 Portail du Patrimoine Technologique</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="explorer.html">Explorer</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="actualites.html" class="active">Actualités</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Actualités du Patrimoine Technologique</h1>
+                <p>Découvrez les dernières actualités agrégées depuis plusieurs flux RSS sur le patrimoine technologique et industriel.</p>
+            </div>
+        </section>
+
+        <section class="news-section">
+            <div class="container">
+                <div id="loading" class="loading">
+                    <div class="spinner"></div>
+                    <p>Chargement des actualités...</p>
+                </div>
+                <div id="news-container" class="news-list">
+                    <!-- Les actualités seront chargées ici -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Portail du Patrimoine Technologique </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        const newsContainer = document.getElementById('news-container');
+        const loadingEl = document.getElementById('loading');
+
+        async function loadNews() {
+            try {
+                const response = await fetch('/api/news');
+                const data = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (data.news && data.news.length > 0) {
+                    newsContainer.innerHTML = data.news.map(item => {
+                        const date = item.pubDate ? new Date(item.pubDate).toLocaleDateString('fr-FR', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                        }) : 'Date inconnue';
+
+                        return `
+                            <article class="news-item">
+                                <div class="news-header">
+                                    <h3><a href="${item.link}" target="_blank">${item.title}</a></h3>
+                                    <div class="news-meta">
+                                        <span class="news-source">${item.source}</span>
+                                        <span class="news-date">${date}</span>
+                                    </div>
+                                </div>
+                                <div class="news-content">
+                                    <p>${item.content.substring(0, 200)}${item.content.length > 200 ? '...' : ''}</p>
+                                </div>
+                                <a href="${item.link}" target="_blank" class="btn-link">Lire l'article complet →</a>
+                            </article>
+                        `;
+                    }).join('');
+                } else {
+                    newsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <p>❌ Aucune actualité disponible</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erreur chargement actualités:', error);
+                loadingEl.style.display = 'none';
+                newsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <p>❌ Erreur lors du chargement des actualités</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger les actualités au chargement de la page
+        loadNews();
+    </script>
+</body>
+</html>
+

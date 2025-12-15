@@ -1,0 +1,26 @@
+{
+  "name": "portail-patrimoine-technologique",
+  "version": "1.0.0",
+  "description": "Portail web agrégant du contenu sur le patrimoine technologique depuis Wikimedia, Wikidata et flux RSS",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "patrimoine",
+    "technologique",
+    "wikimedia",
+    "wikidata",
+    "rss"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5",
+    "axios": "^1.6.0",
+    "rss-parser": "^3.13.0"
+  }
+}
+

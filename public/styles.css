@@ -1,0 +1,1036 @@
+/* ============================================
+   Variables CSS - Design moderne
+   ============================================ */
+:root {
+    --primary-color: #1a237e;
+    --primary-dark: #0d47a1;
+    --primary-light: #3949ab;
+    --secondary-color: #00acc1;
+    --accent-color: #ff6f00;
+    --accent-light: #ff8f00;
+    --success-color: #4caf50;
+    --bg-color: #f5f7fa;
+    --bg-white: #ffffff;
+    --text-color: #212121;
+    --text-light: #757575;
+    --text-muted: #9e9e9e;
+    --border-color: #e0e0e0;
+    --card-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --card-shadow-large: 0 12px 40px rgba(0, 0, 0, 0.15);
+    --border-radius: 12px;
+    --border-radius-small: 8px;
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   Reset & Base
+   ============================================ */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    line-height: 1.7;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* ============================================
+   Header & Navigation - Amélioré
+   ============================================ */
+header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 0;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+nav {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1rem 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.9) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-small);
+    transition: var(--transition);
+    font-weight: 500;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-links a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: var(--transition);
+}
+
+.nav-links a:hover::before,
+.nav-links a.active::before {
+    left: 0;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   Hero Section - Redesign complet
+   ============================================ */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 50%, var(--secondary-color) 100%);
+    color: white;
+    padding: 6rem 0 8rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.hero-content h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    animation: fadeInUp 0.8s ease;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    margin-bottom: 2.5rem;
+    opacity: 0.95;
+    line-height: 1.8;
+    animation: fadeInUp 0.8s ease 0.2s both;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+/* ============================================
+   Buttons - Design moderne
+   ============================================ */
+.btn {
+    padding: 1rem 2.5rem;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: var(--transition);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-light) 100%);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(255, 111, 0, 0.4);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.btn-link {
+    color: var(--secondary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-link:hover {
+    color: var(--accent-color);
+    transform: translateX(5px);
+}
+
+.btn-link::after {
+    content: '→';
+    transition: var(--transition);
+}
+
+.btn-link:hover::after {
+    transform: translateX(5px);
+}
+
+/* ============================================
+   Sections - Design amélioré
+   ============================================ */
+section {
+    padding: 5rem 0;
+}
+
+.page-header {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-bottom: 0;
+}
+
+.page-header h1 {
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.intro {
+    background: var(--bg-white);
+    margin: -3rem auto 3rem;
+    padding: 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow-large);
+    max-width: 1000px;
+    position: relative;
+    z-index: 1;
+}
+
+.intro h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.intro p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+/* ============================================
+   Feature Cards - Design moderne
+   ============================================ */
+.features {
+    background: var(--bg-white);
+    margin: 3rem 0;
+}
+
+.features h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.feature-card {
+    background: var(--bg-white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+    transition: var(--transition);
+    border: 2px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transform: scaleX(0);
+    transition: var(--transition);
+}
+
+.feature-card:hover::before {
+    transform: scaleX(1);
+}
+
+.feature-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--secondary-color);
+}
+
+.feature-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: var(--transition);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.feature-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.feature-card p {
+    color: var(--text-light);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+}
+
+/* ============================================
+   Search Section - Amélioré
+   ============================================ */
+.search-section {
+    background: var(--bg-white);
+    padding: 3rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-box {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-box input {
+    flex: 1;
+    min-width: 250px;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+    background: var(--bg-white);
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0, 172, 193, 0.1);
+}
+
+.search-suggestions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-suggestions span {
+    font-weight: 600;
+    color: var(--text-light);
+}
+
+.suggestion-tag {
+    padding: 0.6rem 1.2rem;
+    background: var(--bg-color);
+    border: 2px solid var(--border-color);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.suggestion-tag:hover {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: white;
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+/* ============================================
+   Results Grid - Design amélioré
+   ============================================ */
+.results-section {
+    background: var(--bg-color);
+    min-height: 400px;
+    padding: 3rem 0;
+}
+
+.results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.result-card {
+    background: var(--bg-white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: var(--transition);
+    box-shadow: var(--card-shadow);
+    display: flex;
+    flex-direction: column;
+}
+
+.result-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--secondary-color);
+}
+
+.result-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.result-card:hover img {
+    transform: scale(1.05);
+}
+
+.card-content {
+    padding: 1.5rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-content h3 {
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    line-height: 1.3;
+}
+
+.card-content p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.7;
+    flex: 1;
+}
+
+.card-actions {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-color);
+}
+
+/* ============================================
+   Gallery - Design amélioré
+   ============================================ */
+.gallery-controls {
+    background: var(--bg-white);
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.category-selector {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.category-selector label {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.category-selector select {
+    padding: 0.75rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    background: var(--bg-white);
+    cursor: pointer;
+    transition: var(--transition);
+    min-width: 200px;
+}
+
+.category-selector select:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0, 172, 193, 0.1);
+}
+
+.gallery-section {
+    background: var(--bg-color);
+    min-height: 400px;
+    padding: 3rem 0;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.gallery-item {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    aspect-ratio: 4/3;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.03);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+    color: white;
+    padding: 1.5rem;
+    transform: translateY(100%);
+    transition: var(--transition);
+}
+
+.gallery-item:hover .gallery-overlay {
+    transform: translateY(0);
+}
+
+.gallery-item a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* ============================================
+   News Section - Design amélioré
+   ============================================ */
+.news-section {
+    background: var(--bg-color);
+    min-height: 400px;
+    padding: 3rem 0;
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.news-item {
+    background: var(--bg-white);
+    padding: 2.5rem;
+    border-radius: var(--border-radius);
+    border-left: 5px solid var(--secondary-color);
+    transition: var(--transition);
+    box-shadow: var(--card-shadow);
+}
+
+.news-item:hover {
+    box-shadow: var(--card-shadow-hover);
+    transform: translateX(8px);
+    border-left-color: var(--accent-color);
+}
+
+.news-header h3 {
+    margin-bottom: 0.75rem;
+}
+
+.news-header h3 a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.news-header h3 a:hover {
+    color: var(--secondary-color);
+}
+
+.news-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    flex-wrap: wrap;
+}
+
+.news-source {
+    font-weight: 600;
+    color: var(--secondary-color);
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 172, 193, 0.1);
+    border-radius: 20px;
+}
+
+.news-content {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+    line-height: 1.8;
+}
+
+/* ============================================
+   Examples Section - Amélioré
+   ============================================ */
+.examples {
+    background: var(--bg-color);
+    margin: 3rem 0;
+    padding: 4rem 0;
+}
+
+.examples h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+/* ============================================
+   Tech Info Section - Redesign
+   ============================================ */
+.tech-info {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    margin: 3rem 0;
+    padding: 4rem 0;
+    border-radius: var(--border-radius);
+}
+
+.tech-info h2 {
+    text-align: center;
+    margin-bottom: 3rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.tech-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.tech-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.tech-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-5px);
+}
+
+.tech-item strong {
+    color: var(--accent-color);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.tech-item {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ============================================
+   Stats Section - Nouveau
+   ============================================ */
+.stats-section {
+    background: var(--bg-white);
+    padding: 4rem 0;
+    margin: 3rem 0;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.stat-card {
+    text-align: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    border-radius: var(--border-radius);
+    color: white;
+    box-shadow: var(--card-shadow);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--card-shadow-hover);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #fff, rgba(255, 255, 255, 0.8));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.stat-label {
+    font-size: 1.1rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* ============================================
+   Quick Search - Nouveau pour accueil
+   ============================================ */
+.quick-search {
+    background: var(--bg-white);
+    padding: 3rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--card-shadow-large);
+    max-width: 800px;
+    margin: -4rem auto 3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.quick-search h3 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.quick-search-box {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.quick-search-box input {
+    flex: 1;
+    min-width: 200px;
+    padding: 1rem 1.5rem;
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    transition: var(--transition);
+}
+
+.quick-search-box input:focus {
+    outline: none;
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(0, 172, 193, 0.1);
+}
+
+/* ============================================
+   Loading & Empty States
+   ============================================ */
+.loading {
+    text-align: center;
+    padding: 4rem;
+}
+
+.spinner {
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1.5rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.empty-state {
+    text-align: center;
+    padding: 4rem;
+    color: var(--text-light);
+    font-size: 1.1rem;
+}
+
+/* ============================================
+   Footer - Amélioré
+   ============================================ */
+footer {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+    color: white;
+    padding: 3rem 0;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.footer-links {
+    margin-top: 1.5rem;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 1rem;
+    transition: var(--transition);
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius-small);
+    display: inline-block;
+}
+
+.footer-links a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in {
+    animation: fadeInUp 0.6s ease both;
+}
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+@media (max-width: 768px) {
+    .hero {
+        padding: 4rem 0 6rem;
+    }
+
+    .hero-content h2 {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .nav-links {
+        gap: 0.25rem;
+        margin-top: 1rem;
+    }
+
+    .nav-links a {
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+
+    .search-box,
+    .quick-search-box {
+        flex-direction: column;
+    }
+
+    .search-box input,
+    .quick-search-box input {
+        width: 100%;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .tech-list {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 3rem 0;
+    }
+
+    .intro {
+        margin: -2rem auto 2rem;
+        padding: 2rem;
+    }
+
+    .quick-search {
+        margin: -3rem auto 2rem;
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

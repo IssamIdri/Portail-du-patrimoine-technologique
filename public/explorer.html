@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explorer - Portail du Patrimoine Technologique</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🏭 Portail du Patrimoine Technologique</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="explorer.html" class="active">Explorer</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="actualites.html">Actualités</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Explorer le Patrimoine Technologique</h1>
+                <p>Recherchez dans Wikipedia et Wikidata des sites, objets, inventeurs et lieux liés au patrimoine technologique.</p>
+            </div>
+        </section>
+
+        <section class="search-section">
+            <div class="container">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="search-input" 
+                        placeholder="Rechercher (ex: pont, observatoire, mines, usine...)"
+                        autocomplete="off"
+                    />
+                    <button id="search-btn" class="btn btn-primary">Rechercher</button>
+                </div>
+                <div class="search-suggestions">
+                    <span>Suggestions :</span>
+                    <button class="suggestion-tag" data-query="patrimoine industriel">Patrimoine industriel</button>
+                    <button class="suggestion-tag" data-query="pont industriel">Pont industriel</button>
+                    <button class="suggestion-tag" data-query="observatoire astronomique">Observatoire</button>
+                    <button class="suggestion-tag" data-query="mine charbon">Mine</button>
+                    <button class="suggestion-tag" data-query="usine textile">Usine</button>
+                    <button class="suggestion-tag" data-query="chemin de fer">Chemin de fer</button>
+                    <button class="suggestion-tag" data-query="phare maritime">Phare</button>
+                    <button class="suggestion-tag" data-query="moulin industriel">Moulin</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="results-section">
+            <div class="container">
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Recherche en cours...</p>
+                </div>
+                <div id="results" class="results-grid">
+                    <div class="empty-state">
+                        <p>🔍 Effectuez une recherche pour découvrir des résultats</p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: #666;">
+                            Ou cliquez sur une suggestion ci-dessus pour commencer
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Portail du Patrimoine Technologique </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const resultsContainer = document.getElementById('results');
+        const loadingEl = document.getElementById('loading');
+
+        // Recherche au clic
+        searchBtn.addEventListener('click', performSearch);
+
+        // Recherche avec Enter
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Suggestions
+        document.querySelectorAll('.suggestion-tag').forEach(btn => {
+            btn.addEventListener('click', () => {
+                searchInput.value = btn.dataset.query;
+                performSearch();
+            });
+        });
+
+        async function performSearch() {
+            const query = searchInput.value.trim();
+            if (!query) return;
+
+            loadingEl.style.display = 'block';
+            resultsContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/wikimedia/search?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (data.results && data.results.length > 0) {
+                    resultsContainer.innerHTML = data.results.map(item => `
+                        <div class="result-card">
+                            ${item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.title}" />` : ''}
+                            <div class="card-content">
+                                <h3>${item.title}</h3>
+                                <p>${item.extract || item.snippet}</p>
+                                <div class="card-actions">
+                                    <a href="${item.url}" target="_blank" class="btn-link">Lire sur Wikipedia →</a>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    resultsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <p>❌ Aucun résultat trouvé pour "${query}"</p>
+                            <p>Essayez avec d'autres mots-clés</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erreur recherche:', error);
+                loadingEl.style.display = 'none';
+                resultsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <p>❌ Erreur lors de la recherche</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            Vérifiez que le serveur est démarré et que vous êtes connecté à Internet
+                        </p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #999;">
+                            ${error.message || 'Erreur inconnue'}
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger automatiquement une recherche par défaut au chargement
+        window.addEventListener('DOMContentLoaded', () => {
+            // Charger "patrimoine industriel" par défaut pour montrer des exemples
+            searchInput.value = 'patrimoine industriel';
+            performSearch();
+        });
+    </script>
+</body>
+</html>
+

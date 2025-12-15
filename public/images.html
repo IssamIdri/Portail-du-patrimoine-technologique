@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Images - Portail du Patrimoine Technologique</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🏭 Portail du Patrimoine Technologique</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="explorer.html">Explorer</a></li>
+                <li><a href="images.html" class="active">Images</a></li>
+                <li><a href="actualites.html">Actualités</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>Galerie d'Images</h1>
+                <p>Découvrez des images du patrimoine technologique et industriel depuis Wikimedia Commons.</p>
+            </div>
+        </section>
+
+        <section class="gallery-controls">
+            <div class="container">
+                <div class="category-selector">
+                    <label for="category-select">Catégorie :</label>
+                    <select id="category-select">
+                        <option value="Industrial heritage">Patrimoine industriel</option>
+                        <option value="Bridges">Ponts</option>
+                        <option value="Observatories">Observatoires</option>
+                        <option value="Mines">Mines</option>
+                        <option value="Factories">Usines</option>
+                        <option value="Railway stations">Gares</option>
+                        <option value="Lighthouses">Phares</option>
+                        <option value="Steam engines">Moteurs à vapeur</option>
+                        <option value="Watermills">Moulins à eau</option>
+                        <option value="Windmills">Moulins à vent</option>
+                        <option value="Industrial architecture">Architecture industrielle</option>
+                    </select>
+                    <button id="load-images-btn" class="btn btn-primary">Charger les images</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <div class="container">
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                    <p>Chargement des images...</p>
+                </div>
+                <div id="gallery" class="gallery-grid">
+                    <div class="empty-state">
+                        <p>🖼️ Sélectionnez une catégorie et cliquez sur "Charger les images"</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Portail du Patrimoine Technologique </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        const categorySelect = document.getElementById('category-select');
+        const loadBtn = document.getElementById('load-images-btn');
+        const galleryContainer = document.getElementById('gallery');
+        const loadingEl = document.getElementById('loading');
+
+        loadBtn.addEventListener('click', loadImages);
+
+        async function loadImages() {
+            const category = categorySelect.value;
+            loadingEl.style.display = 'block';
+            galleryContainer.innerHTML = '';
+
+            try {
+                const response = await fetch(`/api/commons/images?category=${encodeURIComponent(category)}&limit=20`);
+                const data = await response.json();
+
+                loadingEl.style.display = 'none';
+
+                if (data.images && data.images.length > 0) {
+                    galleryContainer.innerHTML = data.images.map(img => `
+                        <div class="gallery-item">
+                            <a href="${img.fullUrl}" target="_blank">
+                                <img src="${img.url}" alt="${img.title}" loading="lazy" />
+                                <div class="gallery-overlay">
+                                    <p>${img.title.replace('File:', '').replace(/\.[^.]+$/, '')}</p>
+                                </div>
+                            </a>
+                        </div>
+                    `).join('');
+                } else {
+                    galleryContainer.innerHTML = `
+                        <div class="empty-state">
+                            <p>❌ Aucune image trouvée pour cette catégorie</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                console.error('Erreur chargement images:', error);
+                loadingEl.style.display = 'none';
+                galleryContainer.innerHTML = `
+                    <div class="empty-state">
+                        <p>❌ Erreur lors du chargement des images</p>
+                        <p style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            Vérifiez que le serveur est démarré et que vous êtes connecté à Internet
+                        </p>
+                        <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #999;">
+                            ${error.message || 'Erreur inconnue'}
+                        </p>
+                        <p style="margin-top: 1rem; font-size: 0.9rem;">
+                            Essayez une autre catégorie ou réessayez plus tard
+                        </p>
+                    </div>
+                `;
+            }
+        }
+
+        // Charger automatiquement au chargement de la page
+        // Attendre un peu pour que le DOM soit complètement chargé
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', () => {
+                setTimeout(loadImages, 500);
+            });
+        } else {
+            setTimeout(loadImages, 500);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portail du Patrimoine Technologique</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">
+                <h1>🏭 Portail du Patrimoine Technologique</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Accueil</a></li>
+                <li><a href="explorer.html">Explorer</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="actualites.html">Actualités</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Découvrez le Patrimoine Technologique</h2>
+                <p class="subtitle">
+                    Un portail interactif qui agrège automatiquement du contenu depuis Wikipedia, Wikidata et des flux RSS 
+                    pour valoriser et rendre accessible le patrimoine technologique et industriel.
+                </p>
+                <div class="hero-buttons">
+                    <a href="explorer.html" class="btn btn-primary">🔍 Explorer</a>
+                    <a href="actualites.html" class="btn btn-secondary">📰 Actualités</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Search -->
+        <section class="quick-search">
+            <h3>Recherche rapide</h3>
+            <div class="quick-search-box">
+                <input 
+                    type="text" 
+                    id="quick-search-input" 
+                    placeholder="Tapez votre recherche (ex: pont, observatoire, mine...)"
+                    autocomplete="off"
+                />
+                <button id="quick-search-btn" class="btn btn-primary">Rechercher</button>
+            </div>
+            <div id="quick-search-results" style="margin-top: 1.5rem; display: none;"></div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-sources">3</div>
+                        <div class="stat-label">Sources de données</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-articles">0</div>
+                        <div class="stat-label">Articles disponibles</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-images">0</div>
+                        <div class="stat-label">Images en galerie</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="stat-news">0</div>
+                        <div class="stat-label">Actualités récentes</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Intro Section -->
+        <section class="intro">
+            <div class="container">
+                <h2>Qu'est-ce que le patrimoine technologique ?</h2>
+                <p>
+                    Le patrimoine technologique regroupe les inventions, sites et savoir-faire qui témoignent de l'évolution scientifique et industrielle. Il englobe machines, ponts, observatoires et les connaissances techniques transmises entre générations.
+                </p>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="container">
+                <h2>Fonctionnalités</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔍</div>
+                        <h3>Explorer</h3>
+                        <p>Recherchez dans Wikipedia et Wikidata des sites, objets et inventeurs liés au patrimoine technologique avec des résultats enrichis.</p>
+                        <a href="explorer.html" class="btn-link">Explorer →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🖼️</div>
+                        <h3>Images</h3>
+                        <p>Découvrez une galerie d'images du patrimoine industriel depuis Wikimedia Commons avec plusieurs catégories disponibles.</p>
+                        <a href="images.html" class="btn-link">Voir les images →</a>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📰</div>
+                        <h3>Actualités</h3>
+                        <p>Suivez l'actualité du patrimoine technologique via des flux RSS agrégés depuis plusieurs sources fiables.</p>
+                        <a href="actualites.html" class="btn-link">Lire les actualités →</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Examples Section -->
+        <section class="examples">
+            <div class="container">
+                <h2>Exemples mis en avant</h2>
+                <div id="featured-results" class="results-grid">
+                    <div class="loading">
+                        <div class="spinner"></div>
+                        <p>Chargement des exemples...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Portail du Patrimoine Technologique </p>
+        </div>
+    </footer>
+
+    <script src="app.js"></script>
+    <script>
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observer les cartes
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.feature-card, .result-card, .stat-card, .tech-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(30px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+
+        // Charger les exemples mis en avant
+        async function loadFeaturedExamples() {
+            const container = document.getElementById('featured-results');
+            try {
+                const response = await fetch('/api/wikimedia/search?query=patrimoine industriel');
+                const data = await response.json();
+                
+                if (data.results && data.results.length > 0) {
+                    const examples = data.results.slice(0, 4);
+                    container.innerHTML = examples.map((item, index) => `
+                        <div class="result-card fade-in" style="animation-delay: ${index * 0.1}s">
+                            ${item.thumbnail ? `<img src="${item.thumbnail}" alt="${item.title}" />` : '<div style="height: 220px; background: linear-gradient(135deg, #1a237e, #3949ab); display: flex; align-items: center; justify-content: center; color: white; font-size: 3rem;">🏭</div>'}
+                            <div class="card-content">
+                                <h3>${item.title}</h3>
+                                <p>${item.extract ? item.extract.substring(0, 150) + '...' : item.snippet}</p>
+                                <div class="card-actions">
+                                    <a href="${item.url}" target="_blank" class="btn-link">Lire plus →</a>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    // Observer les nouvelles cartes
+                    container.querySelectorAll('.result-card').forEach(el => {
+                        el.style.opacity = '0';
+                        el.style.transform = 'translateY(30px)';
+                        observer.observe(el);
+                    });
+                } else {
+                    container.innerHTML = '<div class="empty-state"><p>Aucun résultat trouvé.</p></div>';
+                }
+            } catch (error) {
+                console.error('Erreur chargement exemples:', error);
+                container.innerHTML = '<div class="empty-state"><p>Erreur lors du chargement des exemples.</p></div>';
+            }
+        }
+
+        // Charger les statistiques
+        async function loadStats() {
+            try {
+                // Compter les articles (exemple)
+                const searchResponse = await fetch('/api/wikimedia/search?query=patrimoine');
+                const searchData = await searchResponse.json();
+                const articleCount = searchData.results?.length || 0;
+                animateNumber('stat-articles', articleCount);
+
+                // Compter les images
+                const imagesResponse = await fetch('/api/commons/images?category=Industrial heritage&limit=1');
+                const imagesData = await imagesResponse.json();
+                const imageCount = imagesData.images?.length > 0 ? 1000 : 0; // Estimation
+                animateNumber('stat-images', imageCount);
+
+                // Compter les actualités
+                const newsResponse = await fetch('/api/news');
+                const newsData = await newsResponse.json();
+                const newsCount = newsData.news?.length || 0;
+                animateNumber('stat-news', newsCount);
+            } catch (error) {
+                console.error('Erreur chargement stats:', error);
+            }
+        }
+
+        // Animation des nombres
+        function animateNumber(elementId, target) {
+            const element = document.getElementById(elementId);
+            if (!element) return;
+            
+            let current = 0;
+            const increment = target / 30;
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current).toLocaleString();
+            }, 30);
+        }
+
+        // Recherche rapide
+        const quickSearchInput = document.getElementById('quick-search-input');
+        const quickSearchBtn = document.getElementById('quick-search-btn');
+        const quickSearchResults = document.getElementById('quick-search-results');
+
+        quickSearchBtn.addEventListener('click', performQuickSearch);
+        quickSearchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                performQuickSearch();
+            }
+        });
+
+        async function performQuickSearch() {
+            const query = quickSearchInput.value.trim();
+            if (!query) return;
+
+            quickSearchResults.style.display = 'block';
+            quickSearchResults.innerHTML = '<div class="loading"><div class="spinner"></div><p>Recherche en cours...</p></div>';
+
+            try {
+                const response = await fetch(`/api/wikimedia/search?query=${encodeURIComponent(query)}`);
+                const data = await response.json();
+
+                if (data.results && data.results.length > 0) {
+                    const results = data.results.slice(0, 3);
+                    quickSearchResults.innerHTML = `
+                        <div style="display: grid; gap: 1rem;">
+                            ${results.map(item => `
+                                <div style="background: #f5f7fa; padding: 1rem; border-radius: 8px; border-left: 4px solid #00acc1;">
+                                    <h4 style="margin-bottom: 0.5rem; color: #1a237e;">${item.title}</h4>
+                                    <p style="color: #757575; font-size: 0.9rem; margin-bottom: 0.5rem;">${item.extract ? item.extract.substring(0, 100) + '...' : item.snippet}</p>
+                                    <a href="${item.url}" target="_blank" class="btn-link" style="font-size: 0.9rem;">Lire plus →</a>
+                                </div>
+                            `).join('')}
+                            <div style="text-align: center; margin-top: 1rem;">
+                                <a href="explorer.html" class="btn btn-primary" style="display: inline-block;">Voir tous les résultats</a>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    quickSearchResults.innerHTML = '<div class="empty-state"><p>Aucun résultat trouvé.</p></div>';
+                }
+            } catch (error) {
+                console.error('Erreur recherche rapide:', error);
+                quickSearchResults.innerHTML = '<div class="empty-state"><p>Erreur lors de la recherche.</p></div>';
+            }
+        }
+
+        // Initialisation
+        loadFeaturedExamples();
+        loadStats();
+    </script>
+</body>
+</html>
