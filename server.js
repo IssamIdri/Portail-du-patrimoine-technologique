@@ -11,7 +11,7 @@ const parser = new Parser();
 // Configuration axios avec User-Agent pour Wikimedia
 const axiosConfig = {
   headers: {
-    'User-Agent': 'Portail-Patrimoine-Technologique/1.0 (https://github.com/educational-project; contact@example.com)'
+    'User-Agent': 'TechHeritage/1.0 (https://github.com/educational-project; contact@example.com)'
   },
   timeout: 15000
 };
@@ -44,26 +44,35 @@ app.get('/api/test', (req, res) => {
 function isRelatedToTechnicalHeritage(title, snippet, extract) {
   const text = `${title} ${snippet} ${extract}`.toLowerCase();
   
-  // Mots-clés positifs (liés au patrimoine technologique)
+  // Mots-clés positifs (liés au patrimoine technologique - priorité aux termes techniques)
   const positiveKeywords = [
-    'patrimoine industriel', 'patrimoine technologique', 'patrimoine technique',
-    'industriel', 'industrie', 'usine', 'manufacture', 'manufacturier',
+    // Patrimoine technologique (priorité)
+    'patrimoine technologique', 'patrimoine technique', 'heritage technique',
+    'invention', 'inventeur', 'innovateur', 'innovation', 'innovation technologique',
+    'machine', 'mécanique', 'mécanisation', 'mécanisme',
+    'instrument scientifique', 'appareil scientifique', 'équipement scientifique',
+    'télescope', 'microscope', 'sextant', 'astrolabe', 'chronomètre',
+    'observatoire', 'observatoire astronomique', 'laboratoire', 'centre de recherche',
+    'ingénieur', 'ingénierie', 'ingénierie mécanique', 'ingénierie électrique',
+    'technologie', 'technologique', 'technique', 'technicien',
+    'savoir-faire technique', 'connaissance technique', 'compétence technique',
+    'brevet', 'découverte scientifique', 'expérimentation',
+    'moteur', 'turbine', 'génératrice', 'transformateur',
+    'télécommunication', 'télégraphe', 'téléphone', 'radio', 'télévision',
+    'électricité', 'électrotechnique', 'électronique',
+    'énergie', 'centrale', 'hydroélectrique', 'thermique', 'nucléaire',
+    'transport', 'métro', 'tramway', 'chemin de fer', 'railway',
+    'aviation', 'aéronautique', 'aérospatial',
+    'navigation', 'navigation maritime', 'navigation aérienne',
+    // Patrimoine industriel (comme application du technologique)
+    'patrimoine industriel', 'industriel', 'industrie', 'usine', 'manufacture', 'manufacturier',
+    'site industriel', 'complexe industriel', 'architecture industrielle', 'archéologie industrielle',
     'mine', 'minier', 'carrière', 'extraction',
-    'pont', 'viaduc', 'aqueduc', 'tunnel',
-    'observatoire', 'télescope', 'astronomie',
-    'chemin de fer', 'railway', 'gare', 'station',
-    'phare', 'lighthouse',
-    'moulin', 'mill', 'moulin à eau', 'moulin à vent',
-    'machine', 'mécanique', 'mécanisation',
-    'invention', 'inventeur', 'ingénieur',
-    'architecture industrielle', 'archéologie industrielle',
-    'site industriel', 'complexe industriel',
     'fonderie', 'forge', 'aciérie', 'sidérurgie',
     'textile', 'filature', 'tissage',
-    'énergie', 'centrale', 'électricité', 'hydroélectrique',
-    'canal', 'écluse', 'navigation',
-    'télécommunication', 'télégraphe', 'téléphone',
-    'transport', 'métro', 'tramway',
+    'gare', 'station', 'phare', 'lighthouse',
+    'pont', 'viaduc', 'aqueduc', 'tunnel',
+    'moulin', 'mill', 'moulin à eau', 'moulin à vent',
     'patrimoine maritime', 'patrimoine ferroviaire',
     'monument historique industriel', 'lieu de mémoire industriel'
   ];
@@ -91,8 +100,13 @@ function isRelatedToTechnicalHeritage(title, snippet, extract) {
     }
   }
   
-  // Si la recherche contient des termes techniques, accepter
-  const technicalTerms = ['technique', 'technologie', 'technologique', 'ingénierie', 'mécanique'];
+  // Si la recherche contient des termes techniques (priorité), accepter
+  const technicalTerms = [
+    'technique', 'technologie', 'technologique', 'ingénierie', 'mécanique',
+    'invention', 'innovation', 'inventeur', 'ingénieur',
+    'machine', 'instrument', 'appareil', 'équipement',
+    'scientifique', 'laboratoire', 'observatoire', 'télescope'
+  ];
   for (const term of technicalTerms) {
     if (text.includes(term.toLowerCase())) {
       return true;
@@ -120,14 +134,17 @@ app.get('/api/wikimedia/search', async (req, res) => {
     let enhancedQuery = query;
     const queryLower = query.toLowerCase();
     
-    // Si la recherche ne contient pas de termes techniques, les ajouter
+    // Si la recherche ne contient pas de termes techniques, les ajouter (priorité au technologique)
     if (!queryLower.includes('patrimoine') && 
-        !queryLower.includes('industriel') && 
-        !queryLower.includes('technique') &&
+        !queryLower.includes('technique') && 
+        !queryLower.includes('technologique') &&
+        !queryLower.includes('invention') &&
+        !queryLower.includes('innovation') &&
+        !queryLower.includes('industriel') &&
         !queryLower.includes('usine') &&
         !queryLower.includes('mine') &&
         !queryLower.includes('pont')) {
-      enhancedQuery = `${query} patrimoine industriel OR patrimoine technologique`;
+      enhancedQuery = `${query} patrimoine technologique OR invention OR innovation technologique`;
     }
 
     // Recherche de pages Wikipedia
@@ -337,7 +354,7 @@ app.get('/api/wikidata/query', async (req, res) => {
       params: { query },
       headers: {
         'Accept': 'application/sparql-results+json',
-        'User-Agent': 'Portail-Patrimoine-Technologique/1.0'
+        'User-Agent': 'TechHeritage/1.0'
       }
     });
 
@@ -370,7 +387,7 @@ app.get('/api/wikidata/heritage-sites', async (req, res) => {
       params: { query: sparqlQuery },
       headers: {
         'Accept': 'application/sparql-results+json',
-        'User-Agent': 'Portail-Patrimoine-Technologique/1.0'
+        'User-Agent': 'TechHeritage/1.0'
       }
     });
 

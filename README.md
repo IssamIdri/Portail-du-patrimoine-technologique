@@ -1,4 +1,6 @@
-# 🏭 Portail du Patrimoine Technologique
+# 🏭 TechHeritage
+
+**Explorez le patrimoine technologique et industriel**
 
 Un portail web qui agrège automatiquement du contenu sur le patrimoine technologique depuis **Wikimedia**, **Wikidata** et des **flux RSS**, démontrant l'utilisation des API ouvertes et des standards du web.
 

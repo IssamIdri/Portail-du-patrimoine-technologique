@@ -1,4 +1,4 @@
-# 📖 Guide d'utilisation - Portail du Patrimoine Technologique
+# 📖 Guide d'utilisation - TechHeritage
 
 ## 🚀 Démarrage rapide
 

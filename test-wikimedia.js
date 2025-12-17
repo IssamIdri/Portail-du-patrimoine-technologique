@@ -13,7 +13,7 @@ async function testWikimediaAPI() {
 
     const response = await axios.get(searchUrl, {
       headers: {
-        'User-Agent': 'Portail-Patrimoine-Technologique/1.0 (https://github.com/educational-project; contact@example.com)'
+        'User-Agent': 'TechHeritage/1.0 (https://github.com/educational-project; contact@example.com)'
       },
       params: {
         action: 'query',

@@ -1,7 +1,7 @@
 {
-  "name": "portail-patrimoine-technologique",
+  "name": "techheritage",
   "version": "1.0.0",
-  "description": "Portail web agrégant du contenu sur le patrimoine technologique depuis Wikimedia, Wikidata et flux RSS",
+  "description": "TechHeritage - Portail web agrégant du contenu sur le patrimoine technologique depuis Wikimedia, Wikidata et flux RSS",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

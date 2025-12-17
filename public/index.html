@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portail du Patrimoine Technologique</title>
+    <title>TechHeritage - Explorez le patrimoine technologique</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,8 @@
     <header>
         <nav>
             <div class="logo">
-                <h1>🏭 Portail du Patrimoine Technologique</h1>
+                <img src="images/TechHeritage.png" alt="TechHeritage" class="logo-img" />
+                <h1>TechHeritage</h1>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html" class="active">Accueil</a></li>
@@ -28,10 +29,10 @@
         <!-- Hero Section -->
         <section class="hero">
             <div class="hero-content">
-                <h2>Découvrez le Patrimoine Technologique</h2>
+                <h2>Explorez le Patrimoine Technologique</h2>
                 <p class="subtitle">
-                    Un portail interactif qui agrège automatiquement du contenu depuis Wikipedia, Wikidata et des flux RSS 
-                    pour valoriser et rendre accessible le patrimoine technologique et industriel.
+                    TechHeritage est un portail interactif qui agrège automatiquement du contenu depuis Wikipedia, Wikidata et des flux RSS 
+                    pour valoriser et rendre accessible le patrimoine technologique, incluant les inventions, innovations et savoir-faire techniques, ainsi que le patrimoine industriel qui en découle.
                 </p>
                 <div class="hero-buttons">
                     <a href="explorer.html" class="btn btn-primary">🔍 Explorer</a>
@@ -47,7 +48,7 @@
                 <input 
                     type="text" 
                     id="quick-search-input" 
-                    placeholder="Tapez votre recherche (ex: pont, observatoire, mine...)"
+                    placeholder="Tapez votre recherche (ex: invention, télescope, machine, observatoire...)"
                     autocomplete="off"
                 />
                 <button id="quick-search-btn" class="btn btn-primary">Rechercher</button>
@@ -84,7 +85,7 @@
             <div class="container">
                 <h2>Qu'est-ce que le patrimoine technologique ?</h2>
                 <p>
-                    Le patrimoine technologique regroupe les inventions, sites et savoir-faire qui témoignent de l'évolution scientifique et industrielle. Il englobe machines, ponts, observatoires et les connaissances techniques transmises entre générations.
+                    Le patrimoine technologique regroupe les <strong>inventions, innovations, machines, instruments scientifiques</strong> et savoir-faire techniques qui témoignent de l'évolution technologique et scientifique de l'humanité. Il inclut les objets techniques (télescopes, machines, outils), les sites technologiques (observatoires, laboratoires, centres de recherche), les innovations (télécommunications, énergie, transport) ainsi que le <strong>patrimoine industriel</strong> qui en est l'application concrète (usines, mines, infrastructures). Ce patrimoine documente l'histoire de l'innovation et des connaissances techniques transmises entre générations.
                 </p>
             </div>
         </section>
@@ -103,7 +104,7 @@
                     <div class="feature-card">
                         <div class="feature-icon">🖼️</div>
                         <h3>Images</h3>
-                        <p>Découvrez une galerie d'images du patrimoine industriel depuis Wikimedia Commons avec plusieurs catégories disponibles.</p>
+                        <p>Découvrez une galerie d'images du patrimoine technologique et industriel depuis Wikimedia Commons avec plusieurs catégories disponibles.</p>
                         <a href="images.html" class="btn-link">Voir les images →</a>
                     </div>
                     <div class="feature-card">
@@ -133,7 +134,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; 2025 Portail du Patrimoine Technologique </p>
+            <p>&copy; 2025 TechHeritage - Explorez le patrimoine technologique</p>
         </div>
     </footer>
 
@@ -168,7 +169,7 @@
         async function loadFeaturedExamples() {
             const container = document.getElementById('featured-results');
             try {
-                const response = await fetch('/api/wikimedia/search?query=patrimoine industriel');
+                const response = await fetch('/api/wikimedia/search?query=patrimoine technologique');
                 const data = await response.json();
                 
                 if (data.results && data.results.length > 0) {
